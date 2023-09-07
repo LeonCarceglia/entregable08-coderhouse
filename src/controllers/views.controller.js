@@ -5,8 +5,8 @@ import {userService} from "../services/index.js"
 
 const getProductsRender = async (req, res) => {
     const user = userService.getCurrentUser(req.session.user)
-    const currentUrl = req.protocol + "://" + req.get("host") + req.originalUrl
-    const products = await productService.getProductsRender(currentUrl)
+    const page = parseInt(req.query.page || 1)
+    const products = await productService.getProductsRender(page)
     const productsRender = products.docs.map((item) => {
         return {
             title: item.title,
@@ -18,7 +18,14 @@ const getProductsRender = async (req, res) => {
             cart: user.cart
         }
     })
-    res.render("products", { products: productsRender, user })
+    const paginationInfo = {
+        page: products.page,
+        totalPages: products.totalPages,
+        hasNextPage: products.hasNextPage,
+        nextPage: page < products.totalPages ? page + 1 : null,
+        prevPage: page > 1 ? page - 1 : null
+      }
+    res.render("products", { products: productsRender, paginationInfo, user })
 }
 
 const getCart = async (req, res) => {

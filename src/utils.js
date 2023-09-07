@@ -15,8 +15,8 @@ export const isValidPassword = (user, password) =>
 const initializeSocket = (io) => {
   io.on("connection", socket => {
     console.log("New client coneccted")
-    socket.on("message", data => {
-      const newMessage = messageService.createMessage(data.user, data.message)
+    socket.on("message", async (data) => {
+      const newMessage = await messageService.createMessage(data.user, data.message)
       newMessage.save()
         .then(() => messageService.getMessage())
         .then(messages => {

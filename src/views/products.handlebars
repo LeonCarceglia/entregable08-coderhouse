@@ -1,7 +1,7 @@
 <h1>Products</h1>
 
 <div>
-  Hola, {{user.first_name}} {{user.last_name}}!
+  Hello, {{user.first_name}} {{user.last_name}}!
 </div>
 
 <ul>
@@ -21,16 +21,13 @@
   </li>
   {{/each}}
 </ul>
-{{!-- 
-{{#if links[0]}}
-<a href="{{links[0]}}" class="prevPageButton">Last Page</a>
+{{#if paginationInfo.prevPage}}
+  <a href="/products?page={{paginationInfo.prevPage}}" class="page-button">Last page</a>
 {{/if}}
-
-{{#if links[1]}}
-<a href="{{links[1]}}" class="nextPageButton">Next Page</a>
-{{/if}} --}}
+{{#if paginationInfo.hasNextPage}}
+  <a href="/products?page={{paginationInfo.nextPage}}" class="page-button">Next page</a>
+{{/if}}
 <script src="/js/addProductToCart.js"></script>
-
 <div>
   <a href="/logout">Logout</a>
 </div>

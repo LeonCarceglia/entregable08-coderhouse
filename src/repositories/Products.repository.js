@@ -33,12 +33,7 @@ class ProductsRepository{
     }
 
     async updateProduct(id, product){
-        try{
-            return await this.dao.updateProduct(id, product)
-        }
-        catch(error){
-            throw(error)
-        }
+        return await this.dao.updateProduct(id, product)
     }
 
     async deleteProduct (id){
@@ -50,9 +45,9 @@ class ProductsRepository{
         }
     }
 
-    async getProductsRender(){
+    async getProductsRender(page){
         try{
-            return await this.dao.getProductsRender()
+            return await this.dao.getProductsRender(page)
         }
         catch(error){
             throw(error)

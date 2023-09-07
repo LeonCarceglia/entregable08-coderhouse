@@ -5,7 +5,7 @@ export default class MessageManager {
     }
 
     createMessage = (user, message) => {
-        return messageModel.create(user, message)
+        return messageModel.create({user, message})
     }
 
     getMessage = () => {

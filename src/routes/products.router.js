@@ -7,7 +7,7 @@ export default class ProductsRouter extends CustomRouter {
 
         this.get("/:id", ["PUBLIC"], productsController.getProduct)
 
-        this.put("/:id", ["ADMIN"], productsController.updateProduct)
+        this.put("/:id", ["PUBLIC"], productsController.updateProduct)
 
         this.post("/", ["ADMIN"], productsController.createProduct)
 

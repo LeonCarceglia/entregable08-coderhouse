@@ -3,7 +3,7 @@ import viewsController from "../controllers/views.controller.js"
 
 export default class ViewsRouter extends CustomRouter {
     init() {
-        this.get("/products", ["PUBLIC"], viewsController.getProductsRender)
+        this.get("/products/:page?", ["PUBLIC"], viewsController.getProductsRender)
 
         this.get('/cart/:cid', ["PUBLIC"], viewsController.getCart)
 

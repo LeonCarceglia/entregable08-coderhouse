@@ -63,19 +63,13 @@ export default class ProductsManager {
         return productModel.findByIdAndDelete(id)
     }
 
-    getProductsRender = async (currentUrl) => {
-        const result = await productModel.paginate({}, { lean: true })
-       /*  let prevLink = null
-        if (result.hasPrevPage) {
-            prevLink = currentUrl.replace(`page=${page}`, `page=${result.prevPage}`)
+    getProductsRender = async (page) => {
+        const options = {
+            page: page,
+            limit: 10,
+            lean: true,
         }
-        result.prevLink = prevLink
-        let nextLink = null
-        if (result.hasNextPage) {
-            nextLink = currentUrl.replace(`page=${page}`, `page=${result.nextPage}`)
-        }
-        result.nextLink = nextLink */
-        return result
+        return await productModel.paginate({}, options)
     }
 
     createProductsMock = () => {
