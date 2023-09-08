@@ -1,4 +1,4 @@
-const generateUserErrorInfo = (user) => {
+export const generateUserErrorInfo = (user) => {
   return `
     One or more properties were incomplete or not valid.
     List of required properties:
@@ -8,7 +8,7 @@ const generateUserErrorInfo = (user) => {
   `
 }
 
-const generateProductErrorInfo = (product) => {
+export const generateProductErrorInfo = (product) => {
   return `
     One or more properties were incomplete or not valid.
     List of required properties:
@@ -21,7 +21,4 @@ const generateProductErrorInfo = (product) => {
   `
 }
 
-export default {
-  generateUserErrorInfo,
-  generateProductErrorInfo
-}
+

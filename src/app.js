@@ -26,6 +26,7 @@ const sessionsRouter = new SessionsRouter()
 const app = express()
 const connection = await mongoose.connect(config.MONGODB_URL)
 
+app.use(ErrorHandler)
 app.use(
   session({
     store: new MongoStore({
@@ -43,7 +44,6 @@ app.engine("handlebars", handlebars.engine())
 app.set("views", __dirname + "/views")
 app.set("view engine", "handlebars")
 
-app.use(ErrorHandler)
 app.use(express.json())
 app.use(express.static(__dirname + "/public"))
 

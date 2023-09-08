@@ -14,7 +14,7 @@ const createProduct = () => {
 
 export const generateProductsMock = () => {
     let products = []
-    for(let i = 0; i< 100; i++){
+    for(let i = 0; i< 50; i++){
         products.push(createProduct())
     }
     return products

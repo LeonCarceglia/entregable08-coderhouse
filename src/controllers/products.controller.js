@@ -1,6 +1,6 @@
 import { productService } from "../services/index.js"
 import CustomErrors from "../services/errors/Custom.errors.js"
-import generateProductErrorInfo from "../services/errors/Info.errors.js"
+import { generateProductErrorInfo } from "../services/errors/Info.errors.js"
 import EnumErrors from "../services/errors/Enum.errors.js"
 
 const getProducts = async (req, res) => {
@@ -16,26 +16,44 @@ const getProduct = async (req, res) => {
 }
 
 const updateProduct = async (req, res) => {
-    const { title, description, code, price, stock, category } = req.body
-    if ((!title || !description || !code || !price || !stock || !category) ||
-        (typeof title != "string" || typeof description != "string" || typeof code != "number" || typeof price != "number" || typeof category != "string")) {
-        CustomErrors.createError({
-            name: "Product updating error",
-            cause: generateProductErrorInfo(req.body),
-            message: "Error trying to update product",
-            code: EnumErrors.INVALID_TYPES_ERROR,
-        })
+    try {
+        const { title, description, code, price, stock, category } = req.body
+
+        if (!title || !description || !code || !price || !stock || !category) {
+            CustomErrors.createError({
+                name: "Product updating error",
+                cause: generateProductErrorInfo(req.body),
+                message: "Error trying to update product",
+                code: EnumErrors.INVALID_TYPES_ERROR,
+            })
+        } else {
+            const { id } = req.params
+            const newProduct = req.body
+            const updatedProduct = await productService.updateProduct(id, newProduct)
+            res.json({ status: "ok", data: updatedProduct })
+        }
+    } catch (error) {
+        throw error
     }
-    const { id } = req.params
-    const newProduct = req.body
-    const updatedProduct = await productService.updateProduct(id, newProduct)
-    res.json({ status: "ok", data: updatedProduct })
 }
 
 const createProduct = async (req, res) => {
-    const product = req.body
-    const createdProduct = await productService.createProduct(product)
-    res.status(201).json({ status: "ok", data: createdProduct })
+    try {
+        const { title, description, code, price, stock, category } = req.body
+        if (!title || !description || !code || !price || !stock || !category) {
+            CustomErrors.createError({
+                name: "Product updating error",
+                cause: generateProductErrorInfo(req.body),
+                message: "Error trying to update product",
+                code: EnumErrors.INVALID_TYPES_ERROR,
+            })
+        } else {
+            const createdProduct = await productService.createProduct(product)
+            res.status(201).json({ status: "ok", data: createdProduct })
+        }
+    } catch (error) {
+        throw error
+    }
 }
 
 const deleteProduct = async (req, res) => {
